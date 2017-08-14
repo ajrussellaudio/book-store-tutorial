@@ -1,8 +1,13 @@
 import React from 'react';
+import { connect } from 'react-redux';
 
 class Book extends React.Component {
   constructor(props) {
     super(props);
+  }
+
+  submitBook(input) {
+    this.props.createBook(input);
   }
 
   render() {
@@ -28,4 +33,16 @@ class Book extends React.Component {
   }
 }
 
-export default Book;
+const mapStateToProps = (state, ownProps) => {
+  return {
+    books: state.books
+  }
+}
+
+const mapDispatchToProps = dispatch => {
+  return {
+    createBook: book => dispatch(bookActions.createBook(book))
+  }
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(Book);
